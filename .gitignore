@@ -1,0 +1,32 @@
+# Secrets / environment
+.env
+.env.*
+secrets*
+*.local
+
+# Keys / certificates
+*.pem
+*.key
+*.p12
+*.pfx
+id_*
+
+# Editor / OS clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Shell history
+.zsh_history
+.bash_history
+
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
