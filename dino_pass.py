@@ -5,14 +5,24 @@ import requests
 no_of_passwords = 10
 password_type = 'simple'
 
-# TODO: Add error handling for request failures and invalid responses
 # TODO: Validate user input and response data
-response = requests.get(f"https://www.dinopass.com/password/{password_type}?n={no_of_passwords}&format=json") 
+response = requests.get(f"https://www.dinopass.com/password/{password_type}?n={no_of_passwords}&format=json", timeout=10)
+
+response.raise_for_status() # Raises an HTTP Error if the request returned an unsuccessful status code
+
 data = response.json()
 
-lst = data['passwords']
+# Validate the response structure
+if "passwords" not in data:
+    raise ValueError("Unexpected response")
+
+# Validate the number of passwords returned
+if data["count"] != no_of_passwords:
+    raise ValueError("Warning: fewer passwords returned than requested")
+
+passwords_list = data['passwords']
 
 # TODO: Add options for output to text file
-print("\n".join(lst))
+print("\n".join(passwords_list))
 
 # print(json.dumps(data, indent=4, sort_keys=True)) # Debug: Pretty print JSON response
