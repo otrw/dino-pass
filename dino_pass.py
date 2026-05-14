@@ -5,9 +5,11 @@ parser = argparse.ArgumentParser(
     description="Generate random passwords using the DinoPass API.",
     epilog="Example: python dino_pass.py -n 5 -t strong"
     )
-
-parser.add_argument('-n', '--number', type=int, default=10, help='Number of passwords to generate (1-300)')
-parser.add_argument('-t', '--type', type=str, default='simple', choices=['simple', 'strong'], help='Type of passwords to generate (simple or strong)') 
+# TODO: Add usage as default
+# TODO: Add usuage help with -h or --help and example usage in the help message
+parser.add_argument('-n', '--number', type=int, default=10, help='Number of passwords to generate. Simple 1-300, Strong 1-10')
+parser.add_argument('-t', '--type', type=str, default='simple', choices=['simple', 'strong'], help='Type of passwords to generate (simple or strong)')
+parser.add_argument('-f', '--file', type=str, help='Output file to save the passwords (optional)') 
 args = parser.parse_args()
 
 # Validate input parameters
@@ -37,5 +39,14 @@ if data["count"] != args.number:
 
 passwords_list = data['passwords']
 
-# TODO: Add options for output to text file
-print("\n".join(passwords_list))
+# Save to file if specified, otherwise print to console
+if args.file:
+    with open(args.file, 'w') as f:
+        f.write("\n".join(passwords_list))
+else:
+    print("\n".join(passwords_list))
+
+if args.file:
+    print(f"Saved {len(passwords_list)} passwords to {args.file}")
+else:
+    print(f"Generated {len(passwords_list)} passwords")
