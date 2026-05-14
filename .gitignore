@@ -3,6 +3,7 @@
 .env.*
 secrets*
 *.local
+*passwords.txt
 
 # Keys / certificates
 *.pem
